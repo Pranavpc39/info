@@ -1,0 +1,131 @@
+//TAB is very useful tool for suggestion 
+TRaining testing spliting:
+	from sklearn.model_selection import train_test_split
+	xtrain ,xtest,ytrain,ytest = train_test_split(x,y,test_size = 0.25);
+
+Evaluation:
+	from sklearn import metrics
+	metrics.r2_score(ytest,pred)
+	metrics.classification_report(ytest,pred)
+	metrics.accuracy_score(ytest,pred)
+	regressor.score(xtest,ytest)
+
+linearRegression:
+//resize if u want
+//by 
+//X = np.array(X).reshape(-1,1)
+	from sklearn.linear_model import LinearRegression
+	reg = linearRegression();
+	reg.fit(xtrain,ytrain)
+
+	reg.coef_
+	reg.intercept_
+	predicted = reg.predict(xtest)
+
+	For Evaluation:
+		from sklearn.metrics import r2_score
+		r2_score(ytest,ypred)
+
+Naive Bayes:
+//x can be any value(s)
+//but y should be only categorical
+	importing regressor:
+		from sklearn.naive_bayes import GaussianNB
+		mode_G = GaussianNB;
+	prediction:
+		pred = mode_G.predict(xtest);
+	Evaluation:
+		//here metrics r2_score wont handle as it is categorical
+		mode_G.score(xtest,ytest)# value will be always same as r2_score
+
+
+Decision Tree :
+	importing regressor:
+		from sklearn.tree import DecisionTreeClassifier
+	building regressor:
+		model = DecisionTreeClassifier()
+		model.fit(xtrain,ytrain)
+	Evaluation:
+		from sklearn import metrics
+		metrics.accuracy_score(ytest,pred)
+
+KNN:
+	importing regressor:
+		from sklearn.neighbors import KNeighborsClassifier
+		knn = KNeighborsClassifier(n_neighbor = 1)
+		knn.fit(xtrain,ytrain)
+		pred = knn.predict(ytest)
+	Evaluation:
+		metrics.accuracy_score(ytest,pred)
+		
+Data cleaning:
+	df.isnull().sum()
+	df.describe()
+	df.info()
+	df.head()
+	df.tail()
+	df['para'].fillna(df['para'].mean(),inplace = True)
+
+Data transformation:
+	df_rep = df.replace([to_replace], [value])
+	df_for_month = pd.merge(df_rep,df_emp,on = 'Date')
+
+Reshape:
+	df.tonumpy()
+	df.reshape(20,10)
+
+Building subsets using bins for segregation:
+	import numpy as np
+	q025 =  df_forestFire['area'].quantile(0.50)
+	q2550 =  df_forestFire['area'].quantile(0.75)
+	bins = [0,q025,q2550,1100]
+	labels=['Low','Mid','high']
+	df_forestFire['Statusss'] = pd.cut(df_forestFire['area'],bins=bins,labels=labels)
+
+	df_sub1 = df_forestFire[df_forestFire['Statusss']=='Low']
+
+ Create data subsets for post in Facebook:
+	df_post = df_Facebook[['Post Hour','Paid','Post Month']].copy()
+
+ Merge two subsets
+	df_post = pd.merge(df_post1,df_post2)
+	//both dataset should have atleast 1 common column
+
+ Sort Data 
+	df88.sort_values(by='petal_length(cm)',ascending = False)
+		//using multiple parameters
+	df22_forest = df_forestFire.sort_values(by=['temp', 'wind' ,'area'])
+	
+ Transposing Data
+	df.T
+
+ Melting Data to long format
+	df_melt = df.melt(id_vars='Name')
+	melt->id_vars ="Attributes we dont wanna stack"
+
+l. Casting data to wide format
+	df_cast = df.pivot(index = 'Name',columns=['Course'],values=['Course','Age'])
+
+Outliers detection:
+
+bbox plot::-> find q1 , q3
+	sns.boxplot(df['para'])
+	q1 = df['para'].quantile(0.25)
+	q3 = df['para'].quantile(0.75)
+	IQR = q3 - q1
+	
+	Lower bound = q1 - 1.5 * IQR
+	Upper Bound = q3 + 1.5 * IQR
+	
+	df = df[df['para']>=Lower_bound] df[df['para']<=Upper_bound]
+
+
+
+DATA Visualization:
+import seaborn as sns
+Histogram : sns.histplot(df_iris['petal_length']).set_title("Ayo")
+Scatterplot : sns.scatterplot(x,y);
+
+pieplot:	sp = np.array(df_iris.species.value_counts())
+		plt.pie(sp,labels=['Iris-setosa', 'Iris-versicolor', 'Iris-virginica'])
+
